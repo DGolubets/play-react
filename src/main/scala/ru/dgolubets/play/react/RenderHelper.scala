@@ -18,7 +18,7 @@ private object RenderHelper extends AutoDerivation {
   def render(renderFunction: String, renderTemplate: RenderTemplate, status: Int)
             (implicit renderServer: RenderServer, request: RequestHeader): Future[Result] = {
     val state = RenderState[String](
-      request.path,
+      request.uri,
       status = status
     )
     renderState(renderFunction, renderTemplate, state.asJson, Status(status))
@@ -27,7 +27,7 @@ private object RenderHelper extends AutoDerivation {
   def render[T](renderFunction: String, renderTemplate: RenderTemplate, content: T, status: Int = 200)
                (implicit renderServer: RenderServer, request: RequestHeader, encoder: Encoder[T]): Future[Result] = {
     val state = RenderState(
-      request.path,
+      request.uri,
       status = status,
       content = Some(content)
     )
