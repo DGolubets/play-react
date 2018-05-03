@@ -19,7 +19,10 @@ trait RenderComponents {
   /**
     * Render server
     */
-  implicit lazy val renderServer: RenderServer = new RenderServer(renderConfiguration.serverSettings)
+  implicit lazy val renderServer: RenderServer = {
+    val mockHtml = if(renderConfiguration.enabled) None else Some("")
+    new PlayRenderServer(renderConfiguration.serverSettings, mockHtml)
+  }
 
   /**
     * Default render function

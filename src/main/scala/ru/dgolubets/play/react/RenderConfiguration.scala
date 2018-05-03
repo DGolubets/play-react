@@ -10,7 +10,8 @@ import com.typesafe.config.{Config, ConfigFactory}
 import ru.dgolubets.reactjs.server.{RenderServerSettings, ScriptSource, WatchSettings}
 
 case class RenderConfiguration(serverSettings: RenderServerSettings,
-                               defaultRenderFunction: RenderFunction)
+                               defaultRenderFunction: RenderFunction,
+                               enabled: Boolean)
 
 object RenderConfiguration {
 
@@ -21,7 +22,8 @@ object RenderConfiguration {
   def load(config: Config): RenderConfiguration = {
     RenderConfiguration(
       loadRenderServerSettings(config.getConfig("render-server")),
-      RenderFunction(config.getString("default-render-function")))
+      RenderFunction(config.getString("default-render-function")),
+      config.getBoolean("render-server.enabled"))
   }
 
   private def loadRenderServerSettings(config: Config): RenderServerSettings = {
