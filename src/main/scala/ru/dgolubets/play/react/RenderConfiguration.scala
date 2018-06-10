@@ -27,9 +27,14 @@ object RenderConfiguration {
   }
 
   private def loadRenderServerSettings(config: Config): RenderServerSettings = {
+    var nInstances = config.getInt("instances")
+    if(nInstances == 0){
+      nInstances = Runtime.getRuntime.availableProcessors
+    }
     RenderServerSettings(
-      config.getStringList("sources").asScala.map(parseSource),
-      Try(config.getString("watch.root")).toOption.map(root => WatchSettings(new File(root)))
+      sources = config.getStringList("sources").asScala.map(parseSource),
+      watch = Try(config.getString("watch.root")).toOption.map(root => WatchSettings(new File(root))),
+      nInstances = nInstances
     )
   }
 
