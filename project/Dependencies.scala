@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
 
   object DGolubets {
-    val reactjsServer = "ru.dgolubets" %% "reactjs-server" % "0.2.0"
+    val reactjsServer = "ru.dgolubets" %% "reactjs-server" % "0.2.1"
   }
 
   object Play {
